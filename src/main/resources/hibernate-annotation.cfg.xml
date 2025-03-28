@@ -15,6 +15,6 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 		
 		<!-- Mapping with model class containing annotations -->
-		<mapping class="indra.avitechcom.model.User"/>
+		<mapping class="indra.avitechcom.entity.User"/>
 	</session-factory>
 </hibernate-configuration>
