@@ -1,6 +1,3 @@
 com\journaldev\hibernate\main\HibernateAnnotationMain.class
-com\journaldev\hibernate\main\HibernateMain.class
-com\journaldev\hibernate\model\Employee.class
 com\journaldev\hibernate\util\HibernateUtil.class
-com\journaldev\hibernate\main\HibernateJavaConfigMain.class
-com\journaldev\hibernate\model\Employee1.class
+com\journaldev\hibernate\model\Employee.class

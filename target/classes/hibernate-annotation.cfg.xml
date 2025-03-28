@@ -15,6 +15,6 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 		
 		<!-- Mapping with model class containing annotations -->
-		<mapping class="com.journaldev.hibernate.model.Employee1"/>
+		<mapping class="com.journaldev.hibernate.model.Employee"/>
 	</session-factory>
 </hibernate-configuration>
