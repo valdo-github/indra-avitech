@@ -1,21 +1,21 @@
 package com.journaldev.hibernate.main;
 
 import java.util.Date;
+import java.util.UUID;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.journaldev.hibernate.model.Employee;
+import com.journaldev.hibernate.model.User;
 import com.journaldev.hibernate.util.HibernateUtil;
 
 public class HibernateAnnotationMain {
 
 	public static void main(String[] args) {
-		Employee emp = new Employee();
+		User emp = new User();
 		emp.setName("David");
-		emp.setRole("Developer");
-		emp.setInsertTime(new Date());
-		
+		emp.setGuid(UUID.randomUUID());
+
 		//Get Session
 		SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory();
 		Session session = sessionFactory.getCurrentSession();

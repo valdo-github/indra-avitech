@@ -1,13 +1,9 @@
 package com.journaldev.hibernate.util;
 
-import java.util.Properties;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-
-import com.journaldev.hibernate.model.Employee;
 
 public class HibernateUtil {
 
