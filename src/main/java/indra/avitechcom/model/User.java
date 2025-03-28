@@ -1,4 +1,4 @@
-package com.journaldev.hibernate.model;
+package indra.avitechcom.model;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.journaldev.hibernate.util;
+package indra.avitechcom.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
