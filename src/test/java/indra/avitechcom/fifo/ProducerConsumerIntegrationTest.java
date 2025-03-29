@@ -36,8 +36,6 @@ public class ProducerConsumerIntegrationTest {
 
     @Test
     public void test() throws Exception {
-        UserRepository userRepository = UserRepository.getInstance();
-
         BlockingDeque<Command> queue = new LinkedBlockingDeque<>();
 
         CommandProducer producer = new CommandProducer(queue, "Producer");
@@ -52,10 +50,6 @@ public class ProducerConsumerIntegrationTest {
         producer.deleteAll();
 
         waitToTest(queue, producer);
-
-        thread1.interrupt();
-        thread2.interrupt();
-        userRepository.closeSessionFactory();
 
         verify(service).save(any());
         verify(service).printAll();
