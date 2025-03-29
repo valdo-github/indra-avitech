@@ -1,15 +1,11 @@
 package indra.avitechcom.service;
 
 import indra.avitechcom.entity.User;
-import indra.avitechcom.hibernate.HibernateUtil;
 import indra.avitechcom.mapper.UserMapper;
-import indra.avitechcom.model.UserBO;
+import indra.avitechcom.model.UserDTO;
 import indra.avitechcom.repository.UserRepository;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -33,7 +29,7 @@ public class CommandService {
         repository = UserRepository.getInstance();
     }
 
-    public void save(UserBO user) {
+    public void save(UserDTO user) {
         log.info("Saving user: {}", user);
 
         User entity = mapper.map(user);
@@ -46,7 +42,7 @@ public class CommandService {
 
         List<User> entities = repository.readAll();
 
-        List<UserBO> users = mapper.mapUserBOList(entities);
+        List<UserDTO> users = mapper.mapUserBOList(entities);
 
         if (users.isEmpty()) {
             log.info(" - No users found");

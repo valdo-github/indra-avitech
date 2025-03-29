@@ -4,7 +4,7 @@ import indra.avitechcom.command.Command;
 import indra.avitechcom.command.impl.CommandAdd;
 import indra.avitechcom.command.impl.CommandDeleteAll;
 import indra.avitechcom.command.impl.CommandPrintAll;
-import indra.avitechcom.model.UserBO;
+import indra.avitechcom.model.UserDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ public class CommandProducer implements Runnable {
 
     public void add(int id, String guid, String name) {
 
-        UserBO user = UserBO.builder()
+        UserDTO user = UserDTO.builder()
                 .id(id)
                 .guid(guid)
                 .name(name)
