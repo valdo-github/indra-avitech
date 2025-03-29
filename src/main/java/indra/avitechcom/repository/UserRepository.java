@@ -2,12 +2,11 @@ package indra.avitechcom.repository;
 
 import indra.avitechcom.entity.User;
 import indra.avitechcom.hibernate.HibernateUtil;
-import indra.avitechcom.mapper.UserMapper;
-import indra.avitechcom.model.UserBO;
-import org.hibernate.Criteria;
+import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.mapstruct.factory.Mappers;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -15,48 +14,63 @@ import java.util.function.Function;
 
 public class UserRepository {
 
-    private static SessionFactory sessionFactory;
-    private static UserMapper MAPPER;
+    private static volatile UserRepository INSTANCE;
 
-    private UserRepository() {
-        if (sessionFactory == null) {
-            sessionFactory = HibernateUtil.getSessionAnnotationFactory();
-        }
-        MAPPER = Mappers.getMapper(UserMapper.class);
-    }
+    private static final ThreadLocal<Session> threadLocalSession = new ThreadLocal<>();
+
+    @Getter
+    private static final SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory();
 
     public static UserRepository getInstance() {
-        return new UserRepository();
+        if (INSTANCE == null) {
+            INSTANCE = new UserRepository();
+        }
+        return INSTANCE;
     }
 
-    public void save(UserBO user) {
+    public void save(User entity) {
 
-        User entity = MAPPER.map(user);
-
-        inTx((tx) ->
-                tx.save(entity));
-
-        user.setId(entity.getId());
+        inTxVoid((session) -> {
+            Transaction transaction = session.beginTransaction();
+            session.save(entity);
+            session.flush();
+            transaction.commit();
+        });
     }
 
-    public UserBO read(int id) {
+    public User read(int id) {
 
-        final User result = inTx((session) ->
+        return inTxReturn((session) ->
                 (User) session.get(User.class, id));
-
-        return MAPPER.map(result);
     }
 
-    public List<UserBO> readAll() {
+    public List<User> readAll() {
 
-        final List<User> result = inTx((session) ->
-                session.createCriteria(User.class).list());
-
-        return MAPPER.mapUserBOList(result);
+        return inTxReturn((session) ->
+                session.createCriteria(User.class).list()
+        );
     }
 
-    private <T> T inTx(Function<Session, T> tx) {
-        Session session = sessionFactory.getCurrentSession();
+    public void deleteAll() {
+
+        inTxVoid((session) -> {
+            Transaction transaction = session.beginTransaction();
+            List<User> entities = session.createCriteria(User.class).list();
+            for (User entity : entities) {
+                session.delete(entity);
+            }
+            session.flush();
+            transaction.commit();
+
+        });
+    }
+
+    private static List<User> readAll(Session session) {
+        return session.createCriteria(User.class).list();
+    }
+
+    private <T> T inTxReturn(Function<Session, T> tx) {
+        Session session = getSession();
         session.beginTransaction();
 
         T result = tx.apply(session);
@@ -64,6 +78,24 @@ public class UserRepository {
         session.getTransaction().commit();
 
         return result;
+    }
+
+    private void inTxVoid(Consumer<Session> tx) {
+        Session session = getSession();
+//        session.beginTransaction();
+
+        tx.accept(session);
+
+//        session.getTransaction().commit();
+    }
+
+    public static Session getSession() {
+        Session session = threadLocalSession.get();
+        if (session == null || !session.isOpen()) {
+            session = sessionFactory.openSession();
+            threadLocalSession.set(session);
+        }
+        return session;
     }
 
     /**

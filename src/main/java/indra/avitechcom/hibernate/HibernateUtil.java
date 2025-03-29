@@ -1,10 +1,12 @@
 package indra.avitechcom.hibernate;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+@Slf4j
 public class HibernateUtil {
 
 	//Annotation based configuration
@@ -15,18 +17,16 @@ public class HibernateUtil {
             // Create the SessionFactory from hibernate.cfg.xml
         	Configuration configuration = new Configuration();
         	configuration.configure("hibernate-annotation.cfg.xml");
-        	System.out.println("Hibernate Annotation Configuration loaded");
+        	log.debug("Hibernate Annotation Configuration loaded");
         	
         	ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-        	System.out.println("Hibernate Annotation serviceRegistry created");
+			log.debug("Hibernate Annotation serviceRegistry created");
         	
-        	SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        	
-            return sessionFactory;
+        	return configuration.buildSessionFactory(serviceRegistry);
         }
         catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
+			log.error("Initial SessionFactory creation failed.", ex);
             throw new ExceptionInInitializerError(ex);
         }
 	}

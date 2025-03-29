@@ -22,8 +22,8 @@ public class User {
 	@Column(name="USER_ID", nullable=false, unique=true, length=11)
 	private int id;
 	
-	@Column(name="USER_GUID", columnDefinition = "BINARY(16)")
-	private UUID guid;
+	@Column(name="USER_GUID")
+	private String guid;
 	
 	@Column(name="USER_NAME")
 	private String name;

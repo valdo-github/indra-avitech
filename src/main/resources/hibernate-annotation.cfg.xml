@@ -14,6 +14,12 @@
 		<!-- org.hibernate.HibernateException: No CurrentSessionContext configured! -->
 		<property name="hibernate.current_session_context_class">thread</property>
 		
+		<!-- Disable Hibernate SQL logging -->
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">false</property>
+		<property name="hibernate.use_sql_comments">false</property>
+		<property name="hibernate.generate_statistics">false</property>
+
 		<!-- Mapping with model class containing annotations -->
 		<mapping class="indra.avitechcom.entity.User"/>
 	</session-factory>
