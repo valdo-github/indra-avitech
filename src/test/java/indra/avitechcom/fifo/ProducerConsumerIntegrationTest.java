@@ -1,6 +1,7 @@
 package indra.avitechcom.fifo;
 
 import indra.avitechcom.command.Command;
+import indra.avitechcom.model.UserDTO;
 import indra.avitechcom.repository.UserRepository;
 import indra.avitechcom.service.CommandService;
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +16,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import static indra.avitechcom.Application.waitToTest;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -51,7 +53,7 @@ public class ProducerConsumerIntegrationTest {
 
         waitToTest(queue, producer);
 
-        verify(service).save(any());
+        verify(service).save(eq(new UserDTO(1, "a1", "Robert")));
         verify(service).printAll();
         verify(service).deleteAll();
         verify(service).deleteAll();
