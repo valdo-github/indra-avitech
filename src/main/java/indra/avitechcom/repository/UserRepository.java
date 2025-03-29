@@ -2,7 +2,6 @@ package indra.avitechcom.repository;
 
 import indra.avitechcom.entity.User;
 import indra.avitechcom.hibernate.HibernateUtil;
-import indra.avitechcom.service.CommandService;
 import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
