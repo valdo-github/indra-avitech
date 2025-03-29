@@ -2,7 +2,6 @@ package indra.avitechcom.fifo;
 
 import indra.avitechcom.command.Command;
 import indra.avitechcom.model.UserDTO;
-import indra.avitechcom.repository.UserRepository;
 import indra.avitechcom.service.CommandService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,6 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import static indra.avitechcom.Application.waitToTest;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;

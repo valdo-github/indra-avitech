@@ -53,10 +53,6 @@ public class UserRepository {
         });
     }
 
-    private static List<User> readAll(Session session) {
-        return session.createCriteria(User.class).list();
-    }
-
     private <T> T inTxReturn(Function<Session, T> tx) {
         Session session = getSession();
         session.beginTransaction();
