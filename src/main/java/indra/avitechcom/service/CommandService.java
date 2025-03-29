@@ -14,7 +14,7 @@ public class CommandService {
 
     private static final UserMapper mapper = Mappers.getMapper(UserMapper.class);
 
-    private static volatile CommandService INSTANCE;
+    public static volatile CommandService INSTANCE;
 
     private final UserRepository repository;
 

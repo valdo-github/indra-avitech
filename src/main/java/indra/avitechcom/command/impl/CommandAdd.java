@@ -14,6 +14,8 @@ public class CommandAdd implements Command {
 
     @Override
     public void execute() {
-        CommandService.getInstance().save(user);
+        CommandService
+                .getInstance()
+                .save(user);
     }
 }

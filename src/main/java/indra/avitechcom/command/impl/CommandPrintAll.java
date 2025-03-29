@@ -12,6 +12,8 @@ public class CommandPrintAll implements Command {
     @Override
     public void execute() {
 
-        CommandService.getInstance().printAll();
+        CommandService
+                .getInstance()
+                .printAll();
     }
 }

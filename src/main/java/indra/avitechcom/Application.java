@@ -32,10 +32,9 @@ public class Application {
         producer.add(2, "a2", "Martin");
         producer.printAll();
         producer.deleteAll();
-//        Thread.sleep(500);
         producer.printAll();
 
-        Thread.sleep(1000);
+        waitToTest(queue, producer);
         log.info("\n\nDone\n");
 
 
@@ -43,5 +42,12 @@ public class Application {
         thread1.interrupt();
         thread2.interrupt();
         userRepository.closeSessionFactory();
+    }
+
+    public static void waitToTest(BlockingDeque<Command> queue, CommandProducer producer) throws InterruptedException {
+        int maxWaitInMillis = 1000;
+        while(!queue.isEmpty() || !producer.getRequestCommands().isEmpty() || maxWaitInMillis-- > 0) {
+            Thread.sleep(1);
+        }
     }
 }

@@ -12,6 +12,8 @@ public class CommandDeleteAll implements Command {
     @Override
     public void execute() {
 
-        CommandService.getInstance().deleteAll();
+        CommandService
+                .getInstance()
+                .deleteAll();
     }
 }
