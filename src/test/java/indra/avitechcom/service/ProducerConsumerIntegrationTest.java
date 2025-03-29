@@ -1,11 +1,12 @@
 package indra.avitechcom.fifo;
 
 import indra.avitechcom.command.Command;
+import indra.avitechcom.repository.UserRepository;
 import indra.avitechcom.service.CommandService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.concurrent.BlockingDeque;
@@ -19,8 +20,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 @ExtendWith(MockitoExtension.class)
 public class ProducerConsumerIntegrationTest {
 
-    @Mock
-    private CommandService service;
+    private CommandService service = Mockito.mock(CommandService.class);
 
     @BeforeEach
     void before() {
@@ -29,6 +29,7 @@ public class ProducerConsumerIntegrationTest {
 
     @Test
     public void test() throws Exception {
+        UserRepository userRepository = UserRepository.getInstance();
 
         BlockingDeque<Command> queue = new LinkedBlockingDeque<>();
 
@@ -44,6 +45,10 @@ public class ProducerConsumerIntegrationTest {
         producer.deleteAll();
 
         waitToTest(queue, producer);
+
+        thread1.interrupt();
+        thread2.interrupt();
+        userRepository.closeSessionFactory();
 
         verify(service).save(any());
         verify(service).printAll();
