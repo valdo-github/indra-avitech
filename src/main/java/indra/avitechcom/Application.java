@@ -32,23 +32,24 @@ public class Application {
         thread3.start();
         thread4.start();
 
-        log.info("\nHere we go:\n");
+        log.info("\n\nHere we go:\n");
 
         producer1.add(1, "a1", "Robert");
-        producer1.add(2, "a2", "Martin");
+        producer2.add(2, "a2", "Martin");
         producer1.printAll();
         producer1.deleteAll();
+        Thread.sleep(500);
         producer1.printAll();
+
         Thread.sleep(1000);
-
-        log.info("\nDone\n");
-
+        log.info("\n\nDone\n");
 
 
-//        thread1.interrupt();
-//        thread2.interrupt();
-//        thread3.interrupt();
-//        thread4.interrupt();
+
+        thread1.interrupt();
+        thread2.interrupt();
+        thread3.interrupt();
+        thread4.interrupt();
         userRepository.closeSessionFactory();
     }
 }

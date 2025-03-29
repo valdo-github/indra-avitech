@@ -48,8 +48,12 @@ public class CommandService {
 
         List<UserBO> users = mapper.mapUserBOList(entities);
 
-        for (int i = 0; i < users.size(); i++) {
-            log.info(" {}: {}", (i + 1), users.get(i));
+        if (users.isEmpty()) {
+            log.info(" - No users found");
+        } else {
+            for (int i = 0; i < users.size(); i++) {
+                log.info(" {}: {}", (i + 1), users.get(i));
+            }
         }
     }
 

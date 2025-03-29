@@ -13,7 +13,8 @@
 
 		<!-- org.hibernate.HibernateException: No CurrentSessionContext configured! -->
 		<property name="hibernate.current_session_context_class">thread</property>
-		
+<!--		<property name="hibernate.connection.isolation">2</property>-->
+
 		<!-- Disable Hibernate SQL logging -->
 		<property name="hibernate.show_sql">false</property>
 		<property name="hibernate.format_sql">false</property>

@@ -16,7 +16,7 @@ import java.util.concurrent.BlockingQueue;
 @RequiredArgsConstructor
 public class CommandProducer implements Runnable {
 
-    private static final int SLEEP_IN_MILLIS_DEFAULT = 100;
+    private static final int SLEEP_IN_MILLIS_DEFAULT = 10;
 
     private final BlockingQueue<Command> queue;
     private final String name;

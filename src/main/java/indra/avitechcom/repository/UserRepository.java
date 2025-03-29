@@ -30,12 +30,8 @@ public class UserRepository {
 
     public void save(User entity) {
 
-        inTxVoid((session) -> {
-            Transaction transaction = session.beginTransaction();
-            session.save(entity);
-            session.flush();
-            transaction.commit();
-        });
+        inTxVoid((session) ->
+            session.save(entity));
     }
 
     public User read(int id) {
@@ -54,14 +50,10 @@ public class UserRepository {
     public void deleteAll() {
 
         inTxVoid((session) -> {
-            Transaction transaction = session.beginTransaction();
             List<User> entities = session.createCriteria(User.class).list();
             for (User entity : entities) {
                 session.delete(entity);
             }
-            session.flush();
-            transaction.commit();
-
         });
     }
 
@@ -75,6 +67,7 @@ public class UserRepository {
 
         T result = tx.apply(session);
 
+        session.flush();
         session.getTransaction().commit();
 
         return result;
@@ -82,11 +75,12 @@ public class UserRepository {
 
     private void inTxVoid(Consumer<Session> tx) {
         Session session = getSession();
-//        session.beginTransaction();
+        session.beginTransaction();
 
         tx.accept(session);
 
-//        session.getTransaction().commit();
+        session.flush();
+        session.getTransaction().commit();
     }
 
     public static Session getSession() {
