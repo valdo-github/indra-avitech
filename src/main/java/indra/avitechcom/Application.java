@@ -18,28 +18,22 @@ public class Application {
 
         BlockingDeque<Command> queue = new LinkedBlockingDeque<>();
 
-        CommandProducer producer1 = new CommandProducer(queue, "Producer1");
-        CommandProducer producer2 = new CommandProducer(queue, "Producer2");
-        CommandConsumer consumer1 = new CommandConsumer(queue, "Consumer1");
-        CommandConsumer consumer2 = new CommandConsumer(queue, "Consumer2");
+        CommandProducer producer = new CommandProducer(queue, "Producer");
+        CommandConsumer consumer = new CommandConsumer(queue, "Consumer");
 
-        Thread thread1 = new Thread(producer1);
-        Thread thread2 = new Thread(producer2);
-        Thread thread3 = new Thread(consumer1);
-        Thread thread4 = new Thread(consumer2);
+        Thread thread1 = new Thread(producer);
+        Thread thread2 = new Thread(consumer);
         thread1.start();
         thread2.start();
-        thread3.start();
-        thread4.start();
 
         log.info("\n\nHere we go:\n");
 
-        producer1.add(1, "a1", "Robert");
-        producer2.add(2, "a2", "Martin");
-        producer1.printAll();
-        producer1.deleteAll();
-        Thread.sleep(500);
-        producer1.printAll();
+        producer.add(1, "a1", "Robert");
+        producer.add(2, "a2", "Martin");
+        producer.printAll();
+        producer.deleteAll();
+//        Thread.sleep(500);
+        producer.printAll();
 
         Thread.sleep(1000);
         log.info("\n\nDone\n");
@@ -48,8 +42,6 @@ public class Application {
 
         thread1.interrupt();
         thread2.interrupt();
-        thread3.interrupt();
-        thread4.interrupt();
         userRepository.closeSessionFactory();
     }
 }
