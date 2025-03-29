@@ -16,7 +16,6 @@ public class UserRepository {
 
     private static final ThreadLocal<Session> threadLocalSession = new ThreadLocal<>();
 
-    @Getter
     private static final SessionFactory sessionFactory = HibernateUtil.getSessionAnnotationFactory();
 
     public static UserRepository getInstance() {
@@ -99,11 +98,4 @@ public class UserRepository {
         }
     }
 
-    /**
-     * For tests only
-     */
-    @Deprecated
-    public static void setINSTANCE(UserRepository testValue) {
-        INSTANCE = testValue;
-    }
 }

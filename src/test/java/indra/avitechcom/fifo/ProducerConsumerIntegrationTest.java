@@ -3,10 +3,11 @@ package indra.avitechcom.fifo;
 import indra.avitechcom.command.Command;
 import indra.avitechcom.repository.UserRepository;
 import indra.avitechcom.service.CommandService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.concurrent.BlockingDeque;
@@ -20,11 +21,17 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 @ExtendWith(MockitoExtension.class)
 public class ProducerConsumerIntegrationTest {
 
-    private CommandService service = Mockito.mock(CommandService.class);
+    @Mock
+    private CommandService service;
 
     @BeforeEach
     void before() {
         CommandService.setINSTANCE(service);
+    }
+
+    @AfterEach
+    void after() {
+        CommandService.setINSTANCE(null);
     }
 
     @Test

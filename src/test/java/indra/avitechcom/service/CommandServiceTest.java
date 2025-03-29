@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -22,12 +24,11 @@ public class CommandServiceTest {
 
     private static final PodamFactory factory = new PodamFactoryImpl();
 
-    private static UserRepository repository = Mockito.mock(UserRepository.class);
+    @Mock
+    private static UserRepository repository;
 
-    @BeforeEach
-    void before() {
-        UserRepository.setINSTANCE(repository);
-    }
+    @InjectMocks
+    private CommandService commandService;
 
     @Captor
     private ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
@@ -37,7 +38,7 @@ public class CommandServiceTest {
 
         UserDTO user = factory.manufacturePojo(UserDTO.class);
 
-        CommandService.getInstance().save(user);
+        commandService.save(user);
 
         verify(repository).save(userArgumentCaptor.capture());
         verifyNoMoreInteractions(repository);
@@ -52,7 +53,7 @@ public class CommandServiceTest {
     @Test
     public void testPrintAll() {
 
-        CommandService.getInstance().printAll();
+        commandService.printAll();
 
         verify(repository).readAll();
         verifyNoMoreInteractions(repository);
@@ -61,7 +62,7 @@ public class CommandServiceTest {
     @Test
     public void testDeleteAll() {
 
-        CommandService.getInstance().deleteAll();
+        commandService.deleteAll();
 
         verify(repository).deleteAll();
         verifyNoMoreInteractions(repository);
