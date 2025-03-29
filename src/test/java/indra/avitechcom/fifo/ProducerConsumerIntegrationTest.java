@@ -6,15 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import static indra.avitechcom.Application.waitToTest;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -26,20 +23,12 @@ public class ProducerConsumerIntegrationTest {
     private CommandService service;
 
     @BeforeEach
-    void resetStaticVariable() {
-        CommandService.INSTANCE = service;
+    void before() {
+        CommandService.setINSTANCE(service);
     }
 
     @Test
     public void test() throws Exception {
-
-        try (MockedStatic<CommandService> mockStatic = Mockito.mockStatic(CommandService.class)) {
-            mockStatic.when(CommandService::getInstance).thenReturn(service);
-            CommandService result = CommandService.getInstance();
-
-            assertEquals(service, result);
-            mockStatic.verify(CommandService::getInstance);
-        }
 
         BlockingDeque<Command> queue = new LinkedBlockingDeque<>();
 

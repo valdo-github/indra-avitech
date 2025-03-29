@@ -2,6 +2,7 @@ package indra.avitechcom.repository;
 
 import indra.avitechcom.entity.User;
 import indra.avitechcom.hibernate.HibernateUtil;
+import indra.avitechcom.service.CommandService;
 import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -97,5 +98,13 @@ public class UserRepository {
         if (!sessionFactory.isClosed()) {
             sessionFactory.close();
         }
+    }
+
+    /**
+     * For tests only
+     */
+    @Deprecated
+    public static void setINSTANCE(UserRepository testValue) {
+        INSTANCE = testValue;
     }
 }
